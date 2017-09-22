@@ -1,0 +1,31 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/system_settings_title">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="enable_bg_install"
+            android:summary="@string/enable_bg_install_summary"
+            android:title="@string/enable_bg_install_title" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="hidden_media_volpanel"
+            android:summary="@string/hidden_media_volpanel_summary"
+            android:title="@string/hidden_media_volpanel_title" />
+        <SwitchPreference
+            android:key="enable_connect_hierarchy"
+            android:summary="@string/enable_connect_hierarchy_summary"
+            android:title="@string/enable_connect_hierarchy_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/network_settings_title">
+        <ListPreference
+            android:entries="@array/network_preferred_entries"
+            android:entryValues="@array/network_preferred_entries_values"
+            android:key="network_preferred"
+            android:summary="@string/network_preferred_summary"
+            android:title="@string/network_preferred_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="应用设置">
+
+    </PreferenceCategory>
+</PreferenceScreen>

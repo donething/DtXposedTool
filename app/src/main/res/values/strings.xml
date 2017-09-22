@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">XP箱</string>
+    <string name="enable_bg_install_summary">后台安装应用，完毕后通知</string>
+    <string name="enable_bg_install_title">后台安装应用</string>
+    <string name="hidden_media_volpanel_summary">在播放音乐、视频中调节音量时，不显示音量面板</string>
+    <string name="hidden_media_volpanel_title">隐藏媒体音量面板</string>
+    <string name="enable_connect_hierarchy_summary">允许真机连接Hierarchy</string>
+    <string name="enable_connect_hierarchy_title">可连接Hierarchy</string>
+    <string name="system_settings_title">系统设置</string>
+    <string name="network_settings_title">网络设置</string>
+    <string name="network_preferred_title">优先网络</string>
+    <string name="network_preferred_summary">优先连接网络的类型</string>
+</resources>

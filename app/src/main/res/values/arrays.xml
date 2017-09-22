@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="network_preferred_entries">
+        <item>默认</item>
+        <item>GSM/WCDMA (WCDMA preferred)</item>
+        <item>GSM only</item>
+        <item>WCDMA only</item>
+        <item>GSM/WCDMA (auto mode, according to PRL)</item>
+        <item>CDMA and EvDo (auto mode, according to PRL)</item>
+        <item>CDMA only</item>
+        <item>EvDo only</item>
+        <item>GSM/WCDMA, CDMA, and EvDo (auto mode, according to PRL)</item>
+        <item>LTE, CDMA and EvDo</item>
+        <item>LTE, GSM/WCDMA</item>
+        <item>LTE, CDMA, EvDo, GSM/WCDMA</item>
+        <item>LTE Only mode.</item>
+        <item>LTE/WCDMA</item>
+        <item>TD-SCDMA only</item>
+        <item>TD-SCDMA and WCDMA</item>
+        <item>TD-SCDMA and LTE</item>
+        <item>TD-SCDMA and GSM</item>
+        <item>TD-SCDMA,GSM and LTE</item>
+        <item>TD-SCDMA, GSM/WCDMA</item>
+        <item>TD-SCDMA, WCDMA and LTE</item>
+        <item>TD-SCDMA, GSM/WCDMA and LTE</item>
+        <item>TD-SCDMA,EvDo,CDMA,GSM/WCDMA</item>
+        <item>TD-SCDMA/LTE/GSM/WCDMA, CDMA, and EvDo</item>
+    </string-array>
+    <string-array name="network_preferred_entries_values">
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+    </string-array>
+</resources>
