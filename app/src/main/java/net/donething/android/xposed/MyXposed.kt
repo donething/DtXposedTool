@@ -38,12 +38,6 @@ class MyXposed : IXposedHookLoadPackage, IXposedHookInitPackageResources, IXpose
             CommHelper.log("i", "开始Hook包：优酷：${lpparam.packageName}")
             Youku.dealYouku(lpparam)
         }
-
-        // 阿里小号
-        if (lpparam.packageName == "com.alicom.smartdail") {
-            // CommHelper.log("i", "开始Hook包：阿里小号：${lpparam.packageName}")
-            // AliSmartDail.dealAliSmartDail(lpparam)
-        }
     }
 
     override fun handleInitPackageResources(resparam: XC_InitPackageResources.InitPackageResourcesParam) {
