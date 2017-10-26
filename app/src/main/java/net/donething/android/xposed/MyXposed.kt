@@ -14,6 +14,9 @@ import net.donething.android.dtxposedtool.BuildConfig
 
 class MyXposed : IXposedHookLoadPackage, IXposedHookInitPackageResources, IXposedHookZygoteInit {
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
+        xsp.reload()
+        xsp.makeWorldReadable()
+
         // 后台安装应用
         if (lpparam.packageName == "com.android.packageinstaller" || lpparam.packageName == "com.google.android.packageinstaller") {
             CommHelper.log("i", "开始Hook包：packageInstaller：${lpparam.packageName}")
@@ -34,6 +37,12 @@ class MyXposed : IXposedHookLoadPackage, IXposedHookInitPackageResources, IXpose
         if (lpparam.packageName == "com.youku.phone") {
             CommHelper.log("i", "开始Hook包：优酷：${lpparam.packageName}")
             Youku.dealYouku(lpparam)
+        }
+
+        // 阿里小号
+        if (lpparam.packageName == "com.alicom.smartdail") {
+            // CommHelper.log("i", "开始Hook包：阿里小号：${lpparam.packageName}")
+            // AliSmartDail.dealAliSmartDail(lpparam)
         }
     }
 

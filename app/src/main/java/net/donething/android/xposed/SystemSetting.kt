@@ -5,6 +5,7 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.res.XModuleResources
 import android.graphics.drawable.BitmapDrawable
 import android.media.AudioManager
@@ -20,7 +21,6 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
 import net.donething.android.comm.CommHelper
 import net.donething.android.dtxposedtool.R
 
-
 // Created by Donething on 2017-09-16.
 
 class SystemSetting {
@@ -30,23 +30,22 @@ class SystemSetting {
          * 后台安装
          */
         fun dealPackageInstaller(lpparam: XC_LoadPackage.LoadPackageParam) {
-            MyXposed.xsp.reload()
-            val InstallAppProgressClass = XposedHelpers.findClass("com.android.packageinstaller.InstallAppProgress", lpparam.classLoader)
+            val installAppProgressClass = XposedHelpers.findClass("com.android.packageinstaller.InstallAppProgress", lpparam.classLoader)
             if (!MyXposed.xsp.getBoolean("enable_bg_install", true)) return
 
             // 隐藏软件安装界面
-            findAndHookMethod(InstallAppProgressClass, "onCreate", Bundle::class.java, object : XC_MethodHook() {
+            findAndHookMethod(installAppProgressClass, "onCreate", Bundle::class.java, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     try {
                         val activity = param.thisObject as Activity
                         // 获取包含了安装包信息的Filed:mAppInfo
-                        val mLabel = (XposedHelpers.findField(InstallAppProgressClass, "mLabel").get(activity) as CharSequence).toString()
+                        val mLabel = (XposedHelpers.findField(installAppProgressClass, "mLabel").get(activity) as CharSequence).toString()
 
                         CommHelper.log("i", "finish()PackageInstaller的Activity，后台安装：$mLabel")
                         Toast.makeText(activity, "后台安装：$mLabel", Toast.LENGTH_SHORT).show()
                         activity.finish()     // finish()以隐藏Activity
                     } catch (ex: Exception) {
-                        CommHelper.logXp("Hook：${InstallAppProgressClass::javaClass}.onCreate()时发生异常：$ex")
+                        CommHelper.logXp("Hook：${installAppProgressClass::javaClass}.onCreate()时发生异常：$ex")
                     }
                 }
             })
@@ -65,12 +64,11 @@ class SystemSetting {
                         makeNotification(activity, title, text, param.args[0].toString(), param.args[1] == 1)
                     }
                 })
-            }
-            // Android7.0以上，暂未实现！！！
-            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                findAndHookMethod("com.android.packageinstaller.InstallAppProgress", lpparam.classLoader, "onPackageInstalled", Int::class.java, object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                        CommHelper.log("i", "Hook，安装完成，参数：${param.args[0]}")
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                findAndHookMethod("com.android.packageinstaller.InstallAppProgress${"$"}2", lpparam.classLoader, "onReceive", Context::class.java, Intent::class.java, object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        CommHelper.log("i", "应用安装完成的broadcast")
+                        // val message = param.args[0] as Message
                     }
                 })
             }
@@ -100,8 +98,8 @@ class SystemSetting {
                     // builder.addAction(NotificationCompat.Action(noRunIconResID, "运行应用", noRunIntent))
                 }
                 noManager.notify(noID++, builder.build())
-            } catch (ex: Exception) {
-                CommHelper.logXp("Hook：com.android.packageinstaller.InstallAppProgress${"$"}PackageInstallObserver.packageInstalled()时发生异常：$ex")
+            } catch (e: Exception) {
+                CommHelper.logXp("创建通知出错：${e.message}")
             }
         }
 
