@@ -38,6 +38,12 @@ class MyXposed : IXposedHookLoadPackage, IXposedHookInitPackageResources, IXpose
             CommHelper.log("i", "开始Hook包：优酷：${lpparam.packageName}")
             Youku.dealYouku(lpparam)
         }
+
+        // Iqiyi
+        if (lpparam.packageName == "com.qiyi.video") {
+            CommHelper.log("i", "开始Hook包：爱奇艺：${lpparam.packageName}")
+            // Iqiyi.dealIqiyi(lpparam)
+        }
     }
 
     override fun handleInitPackageResources(resparam: XC_InitPackageResources.InitPackageResourcesParam) {

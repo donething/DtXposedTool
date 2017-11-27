@@ -14,7 +14,6 @@ class Youku {
     companion object {
         fun dealYouku(lpparam: XC_LoadPackage.LoadPackageParam) {
             val detailActivityClass = XposedHelpers.findClass("com.youku.ui.activity.DetailActivity", lpparam.classLoader)
-            val isPlayerOnPauseField = XposedHelpers.findField(detailActivityClass, "isPlayerOnPause")
 
             // 按了Back键表示不需后台播放，其余键表示需要后台播放
             XposedHelpers.findAndHookMethod(detailActivityClass, "onKeyDown", Int::class.java, KeyEvent::class.java, object : XC_MethodHook() {
@@ -28,9 +27,7 @@ class Youku {
             XposedHelpers.findAndHookMethod(detailActivityClass, "onPause", object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: XC_MethodHook.MethodHookParam) {
                     CommHelper.log("i", "开始拦截${detailActivityClass.canonicalName}.onPause()")
-                    // 播放器是否处于暂停状态
-                    val isPlayerOnPause = isPlayerOnPauseField.getBoolean(param.thisObject)
-                    if (needBGPlay && !isPlayerOnPause) {
+                    if (needBGPlay) {
                         XposedHelpers.callMethod(param.thisObject, "onResume")
                         param.result = null
                     }
