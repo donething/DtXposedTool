@@ -1,7 +1,6 @@
 package net.donething.android.xposed
 
 import android.content.Context
-import android.view.KeyEvent
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -15,22 +14,12 @@ class Youku {
         fun dealYouku(lpparam: XC_LoadPackage.LoadPackageParam) {
             val detailActivityClass = XposedHelpers.findClass("com.youku.ui.activity.DetailActivity", lpparam.classLoader)
 
-            // 按了Back键表示不需后台播放，其余键表示需要后台播放
-            XposedHelpers.findAndHookMethod(detailActivityClass, "onKeyDown", Int::class.java, KeyEvent::class.java, object : XC_MethodHook() {
-                override fun beforeHookedMethod(param: MethodHookParam) {
-                    CommHelper.log("i", "当前按键代码：${param.args[0]}")
-                    needBGPlay = param.args[0] != KeyEvent.KEYCODE_BACK
-                }
-            })
-
             // 拦截Activity的onPause，可阻止播放器暂停
             XposedHelpers.findAndHookMethod(detailActivityClass, "onPause", object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: XC_MethodHook.MethodHookParam) {
                     CommHelper.log("i", "开始拦截${detailActivityClass.canonicalName}.onPause()")
-                    if (needBGPlay) {
-                        XposedHelpers.callMethod(param.thisObject, "onResume")
-                        param.result = null
-                    }
+                    XposedHelpers.callMethod(param.thisObject, "onResume")
+                    param.result = null
                 }
             })
 
@@ -54,7 +43,5 @@ class Youku {
                 }
             })
         }
-
-        var needBGPlay = true   // 是否需要开启后台播放
     }
 }
