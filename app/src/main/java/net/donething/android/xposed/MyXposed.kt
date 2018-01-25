@@ -44,6 +44,7 @@ class MyXposed : IXposedHookLoadPackage, IXposedHookInitPackageResources, IXpose
             CommHelper.log("i", "开始Hook包：爱奇艺：${lpparam.packageName}")
             // Iqiyi.dealIqiyi(lpparam)
         }
+        // SystemSetting.enableView(lpparam)
     }
 
     override fun handleInitPackageResources(resparam: XC_InitPackageResources.InitPackageResourcesParam) {
